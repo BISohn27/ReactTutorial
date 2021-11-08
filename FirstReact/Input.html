@@ -1,0 +1,92 @@
+<html>
+<body>
+    <div id="root">
+    </div>
+</body>
+    <script crossorigin src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel">
+        function App() {
+            const [amount,setAmount] = React.useState(0);
+            const [inverted,setInverted] =React.useState(false);
+            const [distance,setDistance] = React.useState(0);
+            const [invertedDistance,setInvertedDistance] = React.useState(false);
+
+            const onChange = (event) => {
+                setAmount(event.target.value);
+            };
+            const reset = () => setAmount(0);
+            const onInvert = () => {
+                reset();
+                setInverted((current) => !current);
+            }
+
+            const onChangeDistance = (event) => {
+                setDistance(event.target.value);
+            }
+            const resetDistance = () => setDistance(0);
+            const onInvertDistance = () => {
+                resetDistance();
+                setInvertedDistance((current) => !current);
+            }
+            return(
+                <div>
+                    <div>
+                        <h1> Super Converter</h1>
+                        <label htmlFor="minutes">Minutes</label>
+                        <input 
+                            value={inverted ? amount*60 : amount}
+                            id="minutes" 
+                            type="number"
+                            onChange= {onChange}
+                            disabled = {inverted}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="hours">Hours</label>
+                        <input 
+                            value={inverted ? amount : Math.round(amount/60)}
+                            id="hours"
+                            type="number"
+                            onChange={onChange}
+                            disabled = {inverted === false}
+                        />
+                    </div>
+                    <div>
+                        <button onClick={reset}>Reset</button>
+                        <button onClick={onInvert}>{inverted ? "Turn Back" : "Invert"}</button>
+                    </div>
+
+                    <div>
+                        <label htmlFor="kilos">Kilos</label>
+                        <input
+                            value={invertedDistance ? distance * 1.6 : distance}
+                            id="kilos"
+                            type="number"
+                            onChange= {onChangeDistance}
+                            disabled = {invertedDistance}
+                        />
+                    </div>
+                    <div>
+                        <label htmlFor="miles">Miles</label>
+                        <input
+                            value={invertedDistance ? distance : distance * 0.621361}
+                            id="miles"
+                            type="number"
+                            onChange = {onChangeDistance}
+                            disabled = {invertedDistance === false}
+                        />
+                    </div>
+                    <div>
+                        <button onClick={resetDistance}>Reset</button>
+                        <button onClick={onInvertDistance}>{invertedDistance ? "Turn Back" : "Invert"}</button>
+                    </div>
+                </div>
+            );
+        }
+
+        const root = document.getElementById("root");
+        ReactDOM.render(<App/>, root);
+    </script>
+</html>

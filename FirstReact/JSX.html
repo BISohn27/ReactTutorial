@@ -10,26 +10,19 @@
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel">
         const root = document.getElementById("root");
-        const Title = () => {
-            return(
-                <h3 id ="title" onMouseEnter={()=>console.log("mouse enter")}>
-                    Hello I'm a title
-                </h3>)
-        };
-
-        const Button = () => (
-            <button sytle={{
-                backgroundColor: "tomato"}}
-                onClick ={()=>console.log("im clicked")}
-            >
-                Click me
-            </button>
-        );
-        const Container = () => (
-            <div>
-                <Title/>
-                <Button/>
+        function App() {
+            let [counter, setCounter] = React.useState(0);
+            const onClick = () =>{
+                //직접 변수를 가져와서 조작하는 것은 이전 값이 아니라 특정 값으로 바꿀 때 유용
+                //setCounter(counter + 1);
+                //직접 변수를 가져오는 것이 아니라 current라는 이전 상태를 기억하는 변수를 통해 값을 변경하여 더 안전하게 변경 가능
+                setCounter((current) => current +1);
+            }
+            return (<div>
+                <h3>Total Num: {counter}</h3>
+                <button onClick={onClick}>Click me</button>
             </div>);
-        ReactDOM.render(<Container/>, root);
+        };
+        ReactDOM.render(<App/>, root);
     </script>
 </html>
